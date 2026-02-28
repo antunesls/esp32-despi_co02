@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "0.0.1"
 description: "DESPI-C02 Driver. Verified and working specifically with the Good Display GDEY042T81 (400x300 B/W E-Paper) using the SSD1683 controller."
 url: "https://github.com/antunesls/esp32-despi_co02"
 repository: "https://github.com/antunesls/esp32-despi_co02.git"
