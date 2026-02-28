@@ -1,30 +1,30 @@
-# DESPI-C02 Driver para ESP-IDF
+# DESPI-C02 Driver for ESP-IDF
 
-Driver em "Bare Metal" para o framework ESP-IDF desenvolvido para operar a placa de conexão **DESPI-C02**.
+"Bare Metal" driver for the ESP-IDF framework designed to operate the **DESPI-C02** connection board.
 
-**📌 IMPORTANTE:** Este driver foi exaustivamente testado e funciona com perfeição (Zero Estática/Chuvisco) especificamente no display **Good Display GDEY042T81** (Tela E-Paper de 4.2", resolução 400x300, Preto/Branco) com o controlador interno **SSD1683**.
-(A sequência de inicialização foi baseada na estabilidade de sinal do projeto GxEPD2 e adaptada nativamente em C para as APIs velozes do ESP-IDF).
+**📌 IMPORTANT:** This driver has been exhaustively tested and works perfectly (Zero Static/Noise) specifically with the **Good Display GDEY042T81** (4.2" E-Paper display, 400x300 resolution, Black/White) using the internal **SSD1683** controller.
+(The initialization sequence was based on the signal stability of the GxEPD2 project and adapted natively in C for the fast ESP-IDF APIs).
 
-## Funcionalidades
-* **Full Refresh** (Limpar a tela para branco ou preto sem ghosting)
-* **Fast Refresh** (Atualização rápida de ~1.5s sem piscar a tela toda)
-* **Partial Refresh** (Atualização em janela específica de memória)
-* Rotinas puras via `spi_device_polling_transmit` com micro-delays (`esp_rom_delay_us`) para estabilizar o controlador sobre a alta velocidade do ESP.
-* Implementação segura e otimizada de deep sleep `epd_sleep()`.
+## Features
+* **Full Refresh** (Clear the screen to white or black without ghosting)
+* **Fast Refresh** (Fast update of ~1.5s without flashing the entire screen)
+* **Partial Refresh** (Update in a specific memory window)
+* Pure routines using `spi_device_polling_transmit` with micro-delays (`esp_rom_delay_us`) to stabilize the controller over the high speed of the ESP.
+* Safe and optimized implementation of deep sleep with `epd_sleep()`.
 
-## Como usar no seu projeto ESP-IDF
-1. Inclua este diretório na sua compilação ou instale pelo Component Registry
-2. Importe `#include "epd_gdey042t81.h"`
-3. Chame:
+## How to use in your ESP-IDF project
+1. Include this directory in your build or install via the Component Registry
+2. Import `#include "epd_gdey042t81.h"`
+3. Call:
 ```c
-epd_init();           // Sobe o barramento SPI e Acorda a tela
-epd_clear_white();    // Limpa a tela
-epd_display(buffer);  // Envia seu framebuffer (imagem/texto)
-epd_sleep();          // Coloca a tela para dormir
+epd_init();           // Starts the SPI bus and wakes up the screen
+epd_clear_white();    // Clears the screen
+epd_display(buffer);  // Sends your framebuffer (image/text)
+epd_sleep();          // Puts the screen to sleep
 ```
 
-## Como alterar Pinos
-Os pinos padrão estão listados em `include/epd_gdey042t81.h`. Basta alterar os defines nesse header de acordo com a sua CPU (Ex: ESP32-S3):
+## How to change Pins
+The default pins are listed in `include/epd_gdey042t81.h`. Just change the defines in this header according to your CPU (Ex: ESP32-S3):
 ```c
 #define EPD_PIN_MOSI    11
 #define EPD_PIN_SCLK    12
@@ -34,27 +34,26 @@ Os pinos padrão estão listados em `include/epd_gdey042t81.h`. Basta alterar os
 #define EPD_PIN_BUSY    21
 ```
 
-## Instalação via ESP Component Registry
+## Installation via ESP Component Registry
 
 ```bash
 idf.py add-dependency "antunesls/despi_c02_driver"
 ```
 
-## Exemplos
+## Examples
 
-O repositório do componente contém exemplos práticos para você testar rapidamente.
+The component repository contains practical examples for you to test quickly.
 
 1. **Basic Usage (`examples/basic_usage`):**
-Demonstra a inicialização completa (Full Refresh), limpando a tela e escrevendo textos básicos.
+Demonstrates full initialization (Full Refresh), clearing the screen and writing basic texts.
 
 2. **Partial / Fast Refresh (`examples/partial_refresh`):**
-Demonstra como utilizar o modo de atualização rápida (~1.5s), configurando um `basemap` para o background inicial e iterando um contador.
+Demonstrates how to use the fast update mode (~1.5s), setting up a `basemap` for the initial background and iterating a counter.
 
-**Como rodar qualquer exemplo:**
+**How to run any example:**
 
 ```bash
 cd examples/basic_usage
-idf.py set-target esp32s3 # substitua pelo seu MCU
+idf.py set-target esp32s3 # replace with your MCU
 idf.py build flash monitor
 ```
-
