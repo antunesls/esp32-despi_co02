@@ -42,7 +42,15 @@ idf.py add-dependency "antunesls/despi_c02_driver"
 
 ## Exemplos
 
-Você pode testar o driver rapidamente rodando o exemplo incluído:
+O repositório do componente contém exemplos práticos para você testar rapidamente.
+
+1. **Basic Usage (`examples/basic_usage`):**
+Demonstra a inicialização completa (Full Refresh), limpando a tela e escrevendo textos básicos.
+
+2. **Partial / Fast Refresh (`examples/partial_refresh`):**
+Demonstra como utilizar o modo de atualização rápida (~1.5s), configurando um `basemap` para o background inicial e iterando um contador.
+
+**Como rodar qualquer exemplo:**
 
 ```bash
 cd examples/basic_usage
